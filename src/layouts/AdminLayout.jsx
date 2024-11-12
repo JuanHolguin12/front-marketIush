@@ -1,17 +1,16 @@
 import React from 'react'
 
 //COMPONENTS
-import { NavBar } from "../components"
+import { NavBar } from '../components'
 
-interface AdminLayoutProps {
-    children: React.ReactNode; // o React.ReactElement si prefieres un único elemento
-}
 
-export function AdminLayout(props: AdminLayoutProps) {
+
+export function AdminLayout(props) {
     const { children } = props
     return (
         <div>
             <div>
+                <NavBar/>
                 {children}
             </div>
         </div>

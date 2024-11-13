@@ -12,7 +12,7 @@ export const ENV = {
         USER: "user",
         CREATE_USER: "create-user",
         REFRESH_ACCES_TOKEN: "auth/refresh_access_token",
-        PROPERTIES: "properties",
+        POSTS: "posts/recent",
         CREATE_PROPERTY: "/property",
         PROPERTY: "property",
         GET_PROPERTY: "properties",

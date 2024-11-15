@@ -25,45 +25,14 @@ export class Auth {
         }
     }
 
-    async refreshAccessToken(refreshToken) {
-        try {
-            const url = `${this.baseApi}/${ENV.API_ROUTES.REFRESH_ACCES_TOKEN}`
-            const params = {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    token: refreshToken
-                })
-            }
-            const response = await fetch(url, params)
-            const result = response.json()
-
-            if (response.status !== 200) throw result
-
-            return result
-
-        } catch (error) {
-            throw error
-        }
-    }
 
     setAccessToken(token, email) {
         localStorage.setItem(ENV.JWT.ACCESS, token)
-        localStorage.setItem("email", email)
+        localStorage.setItem(ENV.JWT.EMAIL, email)
     }
 
     getAccessToken() {
         return { acces: localStorage.getItem(ENV.JWT.ACCESS), email: localStorage.getItem(ENV.JWT.EMAIL) }
-    }
-
-    setRefreshToken(token) {
-        localStorage.setItem(ENV.JWT.REFRESH, token)
-    }
-
-    getRefreshToken() {
-        return localStorage.getItem(ENV.JWT.REFRESH)
     }
 
     removeTokens() {

@@ -30,7 +30,7 @@ export function ArticuleCard(props) {
 
     return (
         <div className='card border-2 rounded-md'>
-            <img src="" alt="img_art" className='border-b-2  bg-blue-500 h-56 rounded-t-md' />
+            <img src={articule.imageUrl} alt="img_art" className='border-b-2  bg-blue-500 h-56 rounded-t-md' />
             <div className='information p-6'>
                 <h2 className='font-semibold text-xl'>{articule.title}</h2>
                 <p>{articule.description}</p>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { ArticuleCard } from '../ArticuleCard/ArticuleCard'
-import { map } from 'lodash'
+import { map, size } from 'lodash'
 
 
 import { Articules } from "../../../api/articules"
@@ -49,6 +49,9 @@ export function ArticulesList() {
       }
     })()
   }, [])
+
+  if (size(list) === 0) return "No hay articulos para mostrar"
+
   return (
     <div className='grid grid-cols-3 gap-9 px-36 pt-9'>
       {map(list, (art) => (

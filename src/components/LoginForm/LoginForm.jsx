@@ -5,6 +5,7 @@ import { Auth } from "../../api"
 import { useAuth } from "../../hooks"
 
 import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
 
 const authController = new Auth()
 
@@ -19,14 +20,13 @@ export function LoginForm() {
             authController.setAccessToken(r.access_token, data.email)
             login(r.access_token, data.email)
         } catch (error) {
-            console.log(error);
-
-            /* toast.error(error.msg, {
+            //console.log(error);
+            toast.error(error.message, {
                 autoClose: 3000,
                 hideProgressBar: true,
                 closeButton: false,
                 closeOnClick: false
-            }) */
+            })
         }
     })
     return (
@@ -47,6 +47,7 @@ export function LoginForm() {
                 <a href='#'><p className='text-blue-600'>¿Has olvidado tu contraseña?</p></a>
             </div>
             <button type='submit' className='p-2 bg-blue-600 text-white rounded-lg'>Iniciar Sesión</button>
+            <ToastContainer/>
         </form>
     )
 }

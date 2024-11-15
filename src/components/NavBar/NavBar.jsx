@@ -23,7 +23,7 @@ export function NavBar() {
             <div className="px-6">
                 <div className="flex items-center justify-between h-16">
                     <div className="flex items-center">
-                        <IconIUSH.logoColor className='h-16 w-16' />
+                        <IconIUSH.logoColor className='h-16 w-16 mr-1' />
                         <span className="font-bold text-xl text-[#f5f5f5]">MarketIush</span>
 
                     </div>

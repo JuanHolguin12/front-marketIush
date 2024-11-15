@@ -5,6 +5,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 //COMPONENTS
 import { AdminLayout } from "../layouts/AdminLayout"
 import { Auth } from "../page/admin/Auth"
+import { PublishArticule } from "../page/web"
 import { NavBar, ArticulesList } from '../components';
 
 import { useAuth } from "../hooks"
@@ -34,7 +35,7 @@ export function AdminRouter() {
                         <Route key={path} path={path} element={loadLayout(AdminLayout, ArticulesList)} />
                     ))}
                     <Route path='/my-articules' element={loadLayout(AdminLayout, NavBar)} />
-                    <Route path='/publish-article' element={loadLayout(AdminLayout, NavBar)} />
+                    <Route path='/publish-article' element={loadLayout(AdminLayout, PublishArticule)} />
                 </>
             )}
         </Routes>

@@ -5,8 +5,9 @@ import { Routes, Route, Navigate } from "react-router-dom";
 //COMPONENTS
 import { AdminLayout } from "../layouts/AdminLayout"
 import { Auth } from "../page/admin/Auth"
-import { PublishArticule } from "../page/web"
-import { NavBar, ArticulesList } from '../components';
+import { RegisterPage } from "../page/admin/Register"
+import { PublishArticule, ArticuleView } from "../page/web"
+import { NavBar, ArticulesList, MyArticules } from '../components';
 
 import { useAuth } from "../hooks"
 
@@ -25,6 +26,7 @@ export function AdminRouter() {
         <Routes>
             {!user ? (
                 <>
+                    <Route path='/register' element={< RegisterPage />} />
                     <Route path='/*' element={< Navigate to="/login" />} />
                     <Route path='/login/*' element={<Auth />} />
                 </>
@@ -34,8 +36,10 @@ export function AdminRouter() {
                     {["/", "/articules"].map((path) => (
                         <Route key={path} path={path} element={loadLayout(AdminLayout, ArticulesList)} />
                     ))}
-                    <Route path='/my-articules' element={loadLayout(AdminLayout, NavBar)} />
+                    <Route path='/my-articules' element={loadLayout(AdminLayout, MyArticules)} />
                     <Route path='/publish-article' element={loadLayout(AdminLayout, PublishArticule)} />
+                    <Route path='/posts/id/:id' element={loadLayout(AdminLayout, ArticuleView)} />
+                    <Route path='/posts/user/:id' element={loadLayout(AdminLayout, MyArticules)} />
                 </>
             )}
         </Routes>

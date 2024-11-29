@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import "./postForm.css"
 
 import { useForm } from "react-hook-form"
@@ -15,12 +15,12 @@ const postController = new Articules()
 
 export function FormPosts() {
 
-    const { accessToken } = useAuth()
+    const { accessToken,  user } = useAuth()
 
     const { register, setValue, handleSubmit, formState: { errors } } = useForm()
 
-    const [loading, setLoading] = useState(false)
     const [imageURL, setImageURL] = useState('')
+    const [loading, setLoading] = useState(false)
     const [image, setImage] = useState('')
 
     //estado del check
@@ -55,40 +55,46 @@ export function FormPosts() {
             }
             const response = await fetch(url, params)
             const file = await response.json()
-            setImageURL(file.secure_url)
+            //setImageURL(file.secure_url)
             setLoading(false)
+            return file.secure_url
         } catch (error) {
-            console.error(error);
             setLoading(false)
+            throw error
         }
     }
 
+
     const onSubmit = handleSubmit(async (data) => {
         try {
-            await uploadImage(image)
-            data['imageUrl'] = imageURL
-            data["isExchange"] = false
-            data["isRequest"] = false
-            data["exchange"] = ""
-            data["price"] = 0
-            console.log(imageURL);
+            const uploadedImageURL = await uploadImage(image); // Obtén la URL directamente
+            data['imageUrl'] = uploadedImageURL;
+            data["isExchange"] = false;
+            data["isRequest"] = false;
+            data["exchange"] = "";
+            data["price"] = Number(data.price)
+            data["userId"] = user.id;
+
+            console.log(data.price);
             console.log(data);
-            await postController.createPost(accessToken, data)
+
+            await postController.createPost(accessToken, data);
+
             toast.success("Publicación creada", {
                 autoClose: 3000,
                 hideProgressBar: true,
                 closeButton: false,
                 closeOnClick: false
-            })
+            });
         } catch (error) {
             toast.error(error.message, {
                 autoClose: 3000,
                 hideProgressBar: true,
                 closeButton: false,
                 closeOnClick: false
-            })
+            });
         }
-    })
+    });
     return (
         <>
             <form className='flex justify-center items-center flex-col gap-5' onSubmit={onSubmit}>
@@ -101,7 +107,22 @@ export function FormPosts() {
                 </div>
                 <div className='container'>
                     <label>Categoria</label>
-                    <input type='text' className=' mt-2' {...register("category", { required: { value: true, message: "La categoria es obligatoria" } })}></input>
+                    <select
+                        defaultValue=""
+                        className='mt-2'
+                        {...register("category", { required: { value: true, message: "La categoria es obligatorio" } })}
+                    >
+                        <option value="" disabled>Seleccione una opción</option>
+                        <option value="LIBROS">Libros</option>
+                        <option value="APUNTES">Apuntes</option>
+                        <option value="CALCULADORAS">Calculadoras</option>
+                        <option value="TECNOLOGIA">Tecnologia</option>
+                        <option value="RECURSOS_DIGITALES">Recursos digitales</option>
+                        <option value="ARTICULOS_DE_ARTES">Articulos de arte</option>
+                        <option value="ARTICULOS_DE_ELECTRONICA">Articulos de electronica</option>
+                        <option value="ARTICULOS_DE_MUSICA">Articulos de música</option>
+                        <option value="OTRO">Otro</option>
+                    </select>
                     {errors.category && (
                         <span className='text-red-500'>{errors.category.message}</span>
                     )}
@@ -119,7 +140,7 @@ export function FormPosts() {
                 </div>
                 <div className='container'>
                     <label>Price</label>
-                    <input type='number' className=' mt-2' disabled={!isChecked} ></input>
+                    <input type='number' className=' mt-2' disabled={!isChecked}  {...register("price")}></input>
                 </div>
                 <div className='container'>
                     <label>Estado</label>
@@ -130,9 +151,9 @@ export function FormPosts() {
                     >
                         <option value="" disabled>Seleccione una opción</option>
                         <option value="NUEVO">Nuevo</option>
-                        <option value="como_nuevo">Como Nuevo</option>
-                        <option value="regular">Regular</option>
-                        <option value="malo">Malo</option>
+                        <option value="CASI_NUEVO">Casi nuevo</option>
+                        <option value="USADO">Usado</option>
+                        <option value="MUY_USADO">Muy usado</option>
                     </select>
                     {errors.condition && (
                         <span className='text-red-500'>{errors.condition.message}</span>

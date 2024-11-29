@@ -1,4 +1,7 @@
 export * from "./NavBar"
 export * from "./LoginForm"
 export * from "./Articules"
+export * from "./MyArticules"
 export * from "./PostsForm"
+export * from "./Comments"
+export * from "./CommentItem"

@@ -9,7 +9,7 @@ import { useAuth } from "../../hooks"
 import "./NavBar.css"
 
 export function NavBar() {
-    const { logout } = useAuth()
+    const { logout, user } = useAuth()
     const navigate = useNavigate()
 
     const onLogout = () => {
@@ -17,6 +17,11 @@ export function NavBar() {
         navigate("/")
     }
 
+    const createHandleMenuClick = (menuItem) => {
+        return () => {
+            console.log(`Clicked on ${menuItem}`);
+        };
+    };
 
     return (
         <nav className="bg-[#00386D] shadow-lg">
@@ -51,13 +56,16 @@ export function NavBar() {
                             </li>
                         </ul>
                     </div>
-                    <div>
-                        <span className="material-symbols-outlined text-4xl text-white">
-                            account_circle
-                        </span>
+                    <div className='flex items-center'>
+                        {user.profilePicture !== null ? (<img className='rounded-full h-12' src={user?.profilePicture} alt='profileImage' />) :(<span className="material-symbols-outlined text-4xl text-white">
+                                account_circle
+                            </span>
+                            )
+                        }
                         <span className="material-symbols-outlined text-white">
                             arrow_drop_down
                         </span>
+
                     </div>
                 </div>
 

@@ -24,6 +24,48 @@ export class Articules {
             throw error
         }
     }
+    async getMyArticules(accessToken, id) {
+        try {
+            const url = `${this.baseApi}/${ENV.API_ROUTES.POSTS_BY_USER}/${id}`
+            const params = {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            }
+
+            const response = await fetch(url, params)
+            const result = await response.json()
+
+            if (response.status !== 200) throw result
+
+            return result
+
+        } catch (error) {
+            throw error
+        }
+    }
+    async getArticulesById(accessToken, id) {
+        try {
+            const url = `${this.baseApi}/posts/id/${id}`
+            const params = {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            }
+
+            const response = await fetch(url, params)
+            const result = await response.json()
+
+            if (response.status !== 200) throw result
+
+            return result
+
+        } catch (error) {
+            throw error
+        }
+    }
+
+    
 
     async createPost(accessToken, data) {
         try {

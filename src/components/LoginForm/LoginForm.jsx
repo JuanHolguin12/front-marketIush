@@ -32,7 +32,7 @@ export function LoginForm() {
     return (
         <form className='h-full flex flex-col gap-5 justify-center p-20 border-2 rounded-md' onSubmit={onSubmit}>
             <div className='flex flex-col'>
-                <label className='font-medium'>Correo Electronico</label>
+                <label className='font-medium'>Correo Electrónico</label>
                 <input type="email" className='h-12 px-3 rounded-lg border-[2px] mt-2' placeholder='ejemplo@comunidad.iush.edu.co' {...register("email", { required: { value: true, message: "El email es obligatorio" } })} />
                 {errors.email && (
                     <span className='text-red-500'>{errors.email.message}</span>
@@ -44,10 +44,11 @@ export function LoginForm() {
                 {errors.email && (
                     <span className='text-red-500'>{errors.password.message}</span>
                 )}
-                <a href='#'><p className='text-blue-600'>¿Has olvidado tu contraseña?</p></a>
             </div>
+            <a href='#'><p className='text-blue-600'>¿Has olvidado tu contraseña?</p></a>
             <button type='submit' className='p-2 bg-blue-600 text-white rounded-lg'>Iniciar Sesión</button>
-            <ToastContainer/>
+            <p>¿No tienes cuenta? <a href='/register'><span className='text-blue-600'>Registrate</span></a></p>
+            <ToastContainer />
         </form>
     )
 }
